@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Rent A Car</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1>Detalle carros</h1>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <table class="table" id="tabla">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Modelo</th>
+            <th scope="col">Categoria</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+
+<script>
+  $(document).ready(function () {
+    ObtenerDatosCarros()
+  });
+
+  function ObtenerDatosCarros() {
+    $.ajax({
+      type: "GET",
+      dataType: "JSON",
+      url: 'https://g5f3529a91a48a8-db202109250926.adb.sa-santiago-1.oraclecloudapps.com/ords/admin/api/car',
+      success: function (respuesta) {
+        var items= respuesta.items;
+        for (var i = 0; i < items.length; i++) {
+          var filaNew = '<tr>' +
+                        '<td>' + items[i].id + '</td>' +
+                        '<td>' + items[i].brand + '</td>' +
+                        '<td>' + items[i].model + '</td>' +
+                        '<td>' + items[i].category_id + '</td>' +
+                        '</tr>';
+          $('#tabla').append(filaNew);
+        }
+      }
+    })
+  }
+</script>
+
+</html>
